@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat, Roboto_Mono } from "next/font/google";
 import "./globals.css";
+import Navbar from "./components/navbar";
 
 export const metadata: Metadata = {
   title: "Schedulo",
@@ -20,8 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${font.variable} ${monoFont.variable} font-sans mt-10`}>
-        {children}
+      <body className={`${font.variable} ${monoFont.variable} font-sans`}>
+        <Navbar />
+        <div className="p-6 mx-auto lg:max-w-[50%]">
+          {children}
+        </div>
       </body>
     </html>
   );
