@@ -14,6 +14,19 @@ const config: Config = {
       },
     }
   },
-  plugins: [],
+  plugins: [require("daisyui"), require('tailwindcss-animated')],
+  daisyui: {
+    themes: [
+      {
+        garden: {
+          ...require("daisyui/src/theming/themes")["garden"],
+        },
+        dracula: {
+          ...require("daisyui/src/theming/themes")["dracula"],
+        },
+      }
+    ],
+    darkTheme: "dracula",
+  },
 };
 export default config;
