@@ -1,3 +1,6 @@
+"use client";
+
+import { easeOutCuaic, scrollToLeft } from "../utils/scroll";
 import OwnerCard, { OwnerCardProps } from "./owner-card";
 
 export default function RecommendedOwners() {
@@ -31,6 +34,7 @@ export default function RecommendedOwners() {
   ];
 
   const scroll = (backwards: boolean) => {
+    const scrollDuration = 200;
     const container = document.getElementById("recommended-owners-container");
     if (!container) {
       return;
@@ -39,24 +43,41 @@ export default function RecommendedOwners() {
     if (!width) {
       return;
     }
+    const navButtons = document
+      .getElementById("recommended-owners-nav")
+      ?.getElementsByTagName("a");
+    if (!navButtons) {
+      return;
+    }
+    for (let i = 0; i < navButtons.length; i++) {
+      navButtons[i].classList.add("btn-disabled");
+    }
+    const onScrollEnd = () => {
+      for (let i = 0; i < navButtons.length; i++) {
+        navButtons[i].classList.remove("btn-disabled");
+      }
+    };
     if (backwards && container.scrollLeft === 0) {
-      container.scrollTo({
-        left: container.scrollWidth,
-        behavior: "smooth",
-      });
+      scrollToLeft(
+        container,
+        container.scrollWidth,
+        scrollDuration,
+        easeOutCuaic,
+        onScrollEnd
+      );
     } else if (
       !backwards &&
       container.scrollLeft + container.offsetWidth === container.scrollWidth
     ) {
-      container.scrollTo({
-        left: 0,
-        behavior: "smooth",
-      });
+      scrollToLeft(container, 0, scrollDuration, easeOutCuaic, onScrollEnd);
     } else {
-      container.scrollBy({
-        left: width * (backwards ? -1 : 1),
-        behavior: "smooth",
-      });
+      scrollToLeft(
+        container,
+        container.scrollLeft + width * (backwards ? -1 : 1),
+        scrollDuration,
+        easeOutCuaic,
+        onScrollEnd
+      );
     }
   };
 
@@ -64,7 +85,10 @@ export default function RecommendedOwners() {
     <>
       <h2 className="font-semibold text-2xl pt-8 pb-2">Recommended</h2>
       <div className="relative">
-        <div className="absolute left-5 right-5 top-1/2 flex justify-between z-10">
+        <div
+          id="recommended-owners-nav"
+          className="absolute left-5 right-5 top-1/2 flex justify-between z-10"
+        >
           <a
             className="btn btn-circle btn-neutral"
             onClick={() => scroll(true)}

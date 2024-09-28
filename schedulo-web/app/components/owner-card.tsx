@@ -18,7 +18,7 @@ export default function OwnerCard(props: OwnerCardProps) {
                 </h3>
                 {props.summary ? <p>{props.summary}</p> : null}
                 <div className="card-actions justify-end">
-                    <button className="btn btn-primary">Schedule Now!</button>
+                    <button className="btn btn-primary">See services</button>
                 </div>
             </div>
         </div>
