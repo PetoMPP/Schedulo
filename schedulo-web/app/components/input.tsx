@@ -1,4 +1,4 @@
-class InputProps {
+type InputProps = {
     name?: string;
     label?: string;
     svg?: React.JSX.Element;
