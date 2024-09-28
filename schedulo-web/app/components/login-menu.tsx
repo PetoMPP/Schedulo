@@ -10,8 +10,8 @@ export default function LoginMenu() {
                 <details>
                     <summary id="login-menu-summary">Login</summary>
                     <ul className="bg-base-100 rounded-t-none p-2 flex flex-col gap-1">
-                        <li><Link onClick={clickMenu} href="/user/login">User</Link></li>
-                        <li><Link onClick={clickMenu} href="/owner/login">Bussiness owner</Link></li>
+                        <li><Link onClick={clickMenu} href="/login">User</Link></li>
+                        <li><Link onClick={clickMenu} href="/biz/login">Bussiness owner</Link></li>
                     </ul>
                 </details>
             </li>
