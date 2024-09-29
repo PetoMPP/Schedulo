@@ -3,14 +3,16 @@ export type OwnerCardProps = {
   img?: string;
   summary?: string;
   new?: boolean;
+  wide?: boolean;
 };
 
 export default function OwnerCard(props: OwnerCardProps) {
+  const style = props.wide ? "w-full" : "card-compact lg:w-96 w-60";
   return (
-    <div className="card card-compact bg-base-100 w-96 shadow-md">
+    <div className={`card bg-base-100 ${style} shadow-md h-full`}>
       <figure>
         <img
-          src={props.img ? props.img : "https://via.placeholder.com/640x360"}
+          src={props.img ? props.img : "https://via.placeholder.com/1200x800"}
           alt={props.name}
         />
       </figure>

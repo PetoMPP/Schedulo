@@ -87,7 +87,7 @@ export default function RecommendedOwners() {
       <div className="relative">
         <div
           id="recommended-owners-nav"
-          className="absolute left-5 right-5 top-1/2 flex justify-between z-10"
+          className="absolute left-0 right-0 top-1/3 flex justify-between z-10 opacity-50"
         >
           <a
             className="btn btn-circle btn-neutral"
