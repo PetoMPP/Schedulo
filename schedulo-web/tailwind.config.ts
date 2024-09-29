@@ -1,4 +1,6 @@
 import type { Config } from "tailwindcss";
+import daisyui from "daisyui";
+import tailwindcss_animated from "tailwindcss-animated";
 
 const config: Config = {
   content: [
@@ -12,21 +14,11 @@ const config: Config = {
         sans: ["var(--font-montserrat)"],
         mono: ["var(--font-roboto-mono)"],
       },
-    }
+    },
   },
-  plugins: [require("daisyui"), require('tailwindcss-animated')],
+  plugins: [daisyui, tailwindcss_animated],
   daisyui: {
-    themes: [
-      {
-        garden: {
-          ...require("daisyui/src/theming/themes")["garden"],
-        },
-        dracula: {
-          ...require("daisyui/src/theming/themes")["dracula"],
-        },
-      }
-    ],
-    darkTheme: "dracula",
+    themes: ["garden", "dracula", "corporate", "business"],
   },
 };
 export default config;
