@@ -16,10 +16,14 @@ export default function useColorScheme(): ColorScheme {
   return colorScheme;
 }
 
-function getColorSchemeMediaQuery(): MediaQueryList {
+function getColorSchemeMediaQuery(): MediaQueryList | undefined {
+  if (typeof window === "undefined") {
+    return undefined;
+  }
+
   return window.matchMedia("(prefers-color-scheme: dark)");
 }
 
-function getColorSchemeFromMediaQuery(mediaQuery: MediaQueryList): ColorScheme {
-  return mediaQuery.matches ? ColorScheme.Dark : ColorScheme.Light;
+function getColorSchemeFromMediaQuery(mediaQuery?: MediaQueryList): ColorScheme {
+  return mediaQuery?.matches ? ColorScheme.Dark : ColorScheme.Light;
 }
