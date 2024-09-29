@@ -1,12 +1,10 @@
-import type { Metadata } from "next";
+'use client';
+
 import { Montserrat, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar";
-
-export const metadata: Metadata = {
-  title: "Schedulo",
-  description: "Schedule your barber appointments and many more!",
-};
+import useIsBiz from "./hooks/is-biz";
+import useColorScheme, { ColorScheme } from "./hooks/color-scheme";
 
 const font = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
 const monoFont = Roboto_Mono({
@@ -19,13 +17,24 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const light = "garden";
+  const dark = "dracula";
+  const lightBiz = "corporate";
+  const darkBiz = "business";
+  const isBiz = useIsBiz();
+  const colorScheme = useColorScheme();
+  const theme = isBiz
+    ? colorScheme === ColorScheme.Light
+      ? lightBiz
+      : darkBiz
+    : colorScheme === ColorScheme.Light
+    ? light
+    : dark;
   return (
-    <html lang="en">
+    <html lang="en" data-theme={theme}>
       <body className={`${font.variable} ${monoFont.variable} font-sans`}>
         <Navbar />
-        <div className="p-6 pt-8 lg:pt-36 mx-auto lg:w-1/2">
-          {children}
-        </div>
+        <div className="p-6 pt-8 lg:pt-36 mx-auto lg:w-1/2">{children}</div>
       </body>
     </html>
   );

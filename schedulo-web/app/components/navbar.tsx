@@ -1,25 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useMemo } from "react";
+import useIsBiz from "../hooks/is-biz";
 
 export default function Navbar() {
-  const pathname = usePathname();
-  const isBizOwner = useMemo(() => pathname.startsWith("/biz"), [pathname]);
+  const isBiz = useIsBiz();
   return (
     <div className="navbar fixed bg-gradient-to-b from-base-300 from-20% opacity-95">
       <div className="flex lg:w-1/2 lg:mx-auto">
         <div className="flex-1">
           <Link
-            href={isBizOwner ? "/biz" : "/"}
+            href={isBiz ? "/biz" : "/"}
             className="btn btn-ghost text-3xl text-base-content font-semibold"
           >
-            {isBizOwner ? "Schedulo Biz" : "Schedulo"}
+            {isBiz ? "Schedulo Biz" : "Schedulo"}
           </Link>
         </div>
         <div className="flex-none flex gap-2">
-          {isBizOwner ? (
+          {isBiz ? (
             <>
               <Link href="/biz/login" className="btn btn-ghost">
                 Login
