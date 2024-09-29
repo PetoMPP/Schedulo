@@ -23,7 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${font.variable} ${monoFont.variable} font-sans`}>
         <Navbar />
-        <div className="p-6 pt-8 lg:pt-36 mx-auto lg:w-1/2">{children}</div>
+        <div className="p-6 pt-24 lg:pt-36 mx-auto lg:w-1/2">{children}</div>
       </body>
     </html>
   );
