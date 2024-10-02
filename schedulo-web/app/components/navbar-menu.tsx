@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import Link from "next/link";
 import useIsBiz from "../hooks/is-biz";
 import useWindowWidth, { WindowWidth } from "../hooks/window-size";
@@ -11,18 +12,18 @@ export default function NavbarMenu() {
     document.getElementById("navbar-menu-summary")?.click();
   const links = isBiz
     ? [
-        <Link href="/biz/login" className="btn btn-ghost">
+        <Link key="biz-login" href="/biz/login" className="btn btn-ghost">
           Login
         </Link>,
-        <Link href="/" className="btn btn-ghost text-secondary break-words">
+        <Link key="login" href="/" className="btn btn-ghost text-secondary break-words">
           Go to appointments portal
         </Link>,
       ]
     : [
-        <Link href="/login" className="btn btn-ghost">
+        <Link key="biz-login" href="/login" className="btn btn-ghost">
           Login
         </Link>,
-        <Link href="/biz" className="btn btn-ghost text-secondary break-words">
+        <Link key="login" href="/biz" className="btn btn-ghost text-secondary break-words">
           Go to business owner portal
         </Link>,
       ];

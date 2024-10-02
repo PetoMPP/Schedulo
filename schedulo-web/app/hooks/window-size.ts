@@ -9,7 +9,11 @@ export enum WindowWidth {
   XXLarge = 1536,
 }
 
-function getWindowWidth(w: number): WindowWidth {
+function getWindowWidth(): WindowWidth {
+  if (typeof window === "undefined") {
+    return WindowWidth.XXLarge;
+  }
+  const w = window.innerWidth;
   if (w < WindowWidth.Small) return WindowWidth.Small;
   if (w < WindowWidth.Medium) return WindowWidth.Medium;
   if (w < WindowWidth.Large) return WindowWidth.Large;
@@ -19,8 +23,9 @@ function getWindowWidth(w: number): WindowWidth {
 }
 
 export default function useWindowWidth(): WindowWidth {
-  const [width, setWidth] = useState(getWindowWidth(window.innerWidth));
-  useEvent(window, "resize", () => setWidth(getWindowWidth(window.innerWidth)));
+  const [width, setWidth] = useState(getWindowWidth());
+  const safeWindow = typeof window !== "undefined" ? window : undefined;
+  useEvent(safeWindow, "resize", () => setWidth(getWindowWidth()));
 
   return width;
 }

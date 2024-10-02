@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import useIsBiz from "./hooks/is-biz";
 import useColorScheme, { ColorScheme } from "./hooks/color-scheme";
 import { useEffect } from "react";

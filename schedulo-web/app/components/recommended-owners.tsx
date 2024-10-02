@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { easeOutCuaic, scrollToLeft } from "../utils/scroll";
 import OwnerCard, { OwnerCardProps } from "./owner-card";
 
