@@ -1,3 +1,4 @@
+import React from "react";
 import Input from "@/app/components/input";
 import SvgEmail from "@/app/components/svg/email";
 import SvgPassword from "@/app/components/svg/password";

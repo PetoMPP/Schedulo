@@ -1,3 +1,4 @@
+import React from "react";
 import Link from "next/link";
 import Search from "./components/search";
 import RecommendedOwners from "./components/recommended-owners";
