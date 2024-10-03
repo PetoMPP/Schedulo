@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "daisyui": "^4.12",
-    "next": "14.2.13",
+    "next": "^15.0.0-canary.177",
     "react": "^18",
     "react-dom": "^18",
     "tailwindcss-animated": "1.1.2"
