@@ -1,12 +1,12 @@
-export type OwnerData = {
+export type ShopData = {
   name: string;
   img?: string;
   summary?: string;
   new?: boolean;
 }
 
-export type OwnerServicesData = {
-  owner: OwnerData;
+export type ShopServicesData = {
+  shop: ShopData;
   services: ServiceData[];
 }
 
