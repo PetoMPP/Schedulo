@@ -2,10 +2,11 @@
 
 import React from "react";
 import { easeOutCuaic, scrollToLeft } from "../utils/scroll";
-import OwnerCard, { OwnerCardProps } from "./owner-card";
+import OwnerCard from "./owner-card";
+import { OwnerData } from "../data/owner";
 
 export default function RecommendedOwners() {
-  const owners: OwnerCardProps[] = [
+  const owners: OwnerData[] = [
     {
       name: "Barber shop",
       summary: "The number 1 barber on this page!",
