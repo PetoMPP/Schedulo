@@ -6,7 +6,7 @@ import SvgSearch from "./svg/search";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function Search(props: { query?: string }) {
+export default function ShopSearch(props: { query?: string }) {
   const [query, setQuery] = useState(props.query);
   const router = useRouter();
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

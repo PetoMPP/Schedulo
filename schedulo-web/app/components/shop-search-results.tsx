@@ -1,10 +1,10 @@
-import { OwnerServicesData } from "../data/owner";
-import OwnerServicesCard from "./owner-services-card";
+import { ShopServicesData } from "../data/shop";
+import OwnerServicesCard from "./shop-services-card";
 
-export default function SearchResults(props: { query?: string }) {
-  const osds: OwnerServicesData[] = [
+export default function ShopSearchResults(props: { query?: string }) {
+  const ssds: ShopServicesData[] = [
     {
-      owner: {
+      shop: {
         name: "Barber shop",
         summary: "The number 1 barber on this page!",
         new: true,
@@ -28,7 +28,7 @@ export default function SearchResults(props: { query?: string }) {
       ],
     },
     {
-      owner: {
+      shop: {
         name: "Beauty salon",
         summary: "You're already beatiful, but wait until you visit us!",
       },
@@ -51,7 +51,7 @@ export default function SearchResults(props: { query?: string }) {
       ],
     },
     {
-      owner: {
+      shop: {
         name: "Boberly shop",
         summary: "The second best barber on this page!",
       },
@@ -74,7 +74,7 @@ export default function SearchResults(props: { query?: string }) {
       ],
     },
     {
-      owner: {
+      shop: {
         name: "Nail salon",
         summary: "We'll make your nails shine!",
       },
@@ -92,7 +92,7 @@ export default function SearchResults(props: { query?: string }) {
       ],
     },
     {
-      owner: {
+      shop: {
         name: "Hair salon",
         summary: "We'll make your hair shine!",
       },
@@ -115,7 +115,7 @@ export default function SearchResults(props: { query?: string }) {
       ],
     },
     {
-      owner: {
+      shop: {
         name: "Tattoo parlor",
         summary: "We'll make your skin different!",
         new: true,
@@ -139,10 +139,10 @@ export default function SearchResults(props: { query?: string }) {
       ],
     },
   ];
-  const filtered = osds.filter(
-    (osd: OwnerServicesData) =>
-      osd.owner.name.toLowerCase().includes(props.query!) ||
-      osd.owner.summary?.toLowerCase().includes(props.query!)
+  const filtered = ssds.filter(
+    (osd: ShopServicesData) =>
+      osd.shop.name.toLowerCase().includes(props.query!) ||
+      osd.shop.summary?.toLowerCase().includes(props.query!)
   );
 
   return (

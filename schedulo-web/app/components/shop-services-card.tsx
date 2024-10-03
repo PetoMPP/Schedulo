@@ -1,7 +1,7 @@
-import { OwnerServicesData } from "../data/owner";
+import { ShopServicesData } from "../data/shop";
 
-export default function OwnerCard(props: OwnerServicesData) {
-  const owner = props.owner;
+export default function ShopServicesCard(props: ShopServicesData) {
+  const owner = props.shop;
   return (
     <div className="rounded-box bg-base-100 w-full lg:h-80 flex flex-col lg:flex-row shadow-md">
       <div className="relative">

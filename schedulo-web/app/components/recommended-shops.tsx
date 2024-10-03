@@ -2,11 +2,11 @@
 
 import React from "react";
 import { easeOutCuaic, scrollToLeft } from "../utils/scroll";
-import OwnerCard from "./owner-card";
-import { OwnerData } from "../data/owner";
+import OwnerCard from "./shop-card";
+import { ShopData } from "../data/shop";
 
-export default function RecommendedOwners() {
-  const owners: OwnerData[] = [
+export default function RecommendedShops() {
+  const shops: ShopData[] = [
     {
       name: "Barber shop",
       summary: "The number 1 barber on this page!",
@@ -108,7 +108,7 @@ export default function RecommendedOwners() {
           id="recommended-owners-container"
           className="p-4 overflow-x-hidden flex"
         >
-          {owners.map((owner, index) => (
+          {shops.map((owner, index) => (
             <div key={index} className="p-2">
               <OwnerCard {...owner} />
             </div>

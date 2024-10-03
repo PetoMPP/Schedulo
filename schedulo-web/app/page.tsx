@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
-import Search from "./components/search";
-import RecommendedOwners from "./components/recommended-owners";
+import ShopSearch from "./components/shop-search";
+import RecommendedShops from "./components/recommended-shops";
 import DiscoverAreas from "./components/discover-areas";
 
 export default function App() {
@@ -11,7 +11,7 @@ export default function App() {
       <p className="pb-8">
         Here you can schedule your boberly appointments and many more!
       </p>
-      <Search />
+      <ShopSearch />
       <p className="font-mono pt-4">
         This service is free for first 20 business owners that register{" "}
         <Link className="text-blue-500 underline" href="#">
@@ -19,7 +19,7 @@ export default function App() {
         </Link>
         !
       </p>
-      <RecommendedOwners />
+      <RecommendedShops />
       <DiscoverAreas />
     </>
   );
