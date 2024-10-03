@@ -1,15 +1,8 @@
-export type OwnerCardProps = {
-  name: string;
-  img?: string;
-  summary?: string;
-  new?: boolean;
-  wide?: boolean;
-};
+import { OwnerData } from "../data/owner";
 
-export default function OwnerCard(props: OwnerCardProps) {
-  const style = props.wide ? "w-full" : "card-compact lg:w-96 w-60";
+export default function OwnerCard(props: OwnerData) {
   return (
-    <div className={`card bg-base-100 ${style} shadow-md h-full`}>
+    <div className="card card-compact bg-base-100 lg:w-96 w-60 shadow-md h-full">
       <figure>
         <img
           src={props.img ? props.img : "https://via.placeholder.com/1200x800"}
