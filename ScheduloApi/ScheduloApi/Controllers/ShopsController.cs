@@ -52,15 +52,30 @@ namespace ScheduloApi.Controllers
             return Ok(shopModel);
         }
 
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] ShopModel shopModel)
+        {
+            if (!_context.ShopModel.Any(s => s.Id == id))
+            {
+                return NotFound();
+            }
+
+            shopModel.Id = id;
+            _context.ShopModel.Update(shopModel);
+            await _context.SaveChangesAsync();
+            return Ok(shopModel);
+        }
+
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
             var shopModel = await _context.ShopModel.FindAsync(id);
-            if (shopModel != null)
+            if (shopModel == null)
             {
-                _context.ShopModel.Remove(shopModel);
+                return NotFound();
             }
 
+            _context.ShopModel.Remove(shopModel);
             await _context.SaveChangesAsync();
             return Ok();
         }
