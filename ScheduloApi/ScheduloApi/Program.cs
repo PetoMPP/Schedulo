@@ -1,10 +1,14 @@
-namespace Schedulo_api
+﻿using Microsoft.EntityFrameworkCore;
+using ScheduloApi.Data;
+namespace ScheduloApi
 {
     public class Program
     {
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<ApiContext>(options =>
+                options.UseSqlite(builder.Configuration.GetConnectionString("ScheduloApiContext") ?? throw new InvalidOperationException("Connection string 'ScheduloApiContext' not found.")));
 
             // Add services to the container.
 
