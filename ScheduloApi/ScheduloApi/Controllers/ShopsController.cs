@@ -19,7 +19,7 @@ namespace ScheduloApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll(bool withServices)
         {
-            IQueryable<ShopModel> query = _context.ShopModel;
+            IQueryable<Shop> query = _context.Shops;
             if (withServices)
             {
                 query = query.Include(s => s.Services);
@@ -28,9 +28,9 @@ namespace ScheduloApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id, bool withServices)
+        public async Task<IActionResult> Get(Guid id, bool withServices)
         {
-            IQueryable<ShopModel> query = _context.ShopModel;
+            IQueryable<Shop> query = _context.Shops;
             if (withServices)
             {
                 query = query.Include(s => s.Services);
@@ -45,7 +45,7 @@ namespace ScheduloApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] ShopModel shopModel)
+        public async Task<IActionResult> Create([FromBody] Shop shopModel)
         {
             _context.Add(shopModel);
             await _context.SaveChangesAsync();
@@ -53,15 +53,15 @@ namespace ScheduloApi.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] ShopModel shopModel)
+        public async Task<IActionResult> Update(Guid id, [FromBody] Shop shopModel)
         {
-            if (!_context.ShopModel.Any(s => s.Id == id))
+            if (!_context.Shops.Any(s => s.Id == id))
             {
                 return NotFound();
             }
 
             shopModel.Id = id;
-            _context.ShopModel.Update(shopModel);
+            _context.Shops.Update(shopModel);
             await _context.SaveChangesAsync();
             return Ok(shopModel);
         }
@@ -69,13 +69,13 @@ namespace ScheduloApi.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(int id)
         {
-            var shopModel = await _context.ShopModel.FindAsync(id);
+            var shopModel = await _context.Shops.FindAsync(id);
             if (shopModel == null)
             {
                 return NotFound();
             }
 
-            _context.ShopModel.Remove(shopModel);
+            _context.Shops.Remove(shopModel);
             await _context.SaveChangesAsync();
             return Ok();
         }

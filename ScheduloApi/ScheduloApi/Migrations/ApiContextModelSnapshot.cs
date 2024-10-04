@@ -10,18 +10,18 @@ using ScheduloApi.Data;
 namespace ScheduloApi.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    partial class ScheduloApiContextModelSnapshot : ModelSnapshot
+    partial class ApiContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
 
-            modelBuilder.Entity("ScheduloApi.Models.ShopModel", b =>
+            modelBuilder.Entity("ScheduloApi.Models.Shop", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
@@ -41,14 +41,14 @@ namespace ScheduloApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ShopModel");
+                    b.ToTable("Shops");
                 });
 
-            modelBuilder.Entity("ScheduloApi.Models.ShopServiceModel", b =>
+            modelBuilder.Entity("ScheduloApi.Models.ShopService", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
@@ -63,28 +63,27 @@ namespace ScheduloApi.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("ShopModelId")
-                        .HasColumnType("INTEGER");
+                    b.Property<Guid>("ShopId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ShopModelId");
+                    b.HasIndex("ShopId");
 
-                    b.ToTable("ShopServiceModel");
+                    b.ToTable("ShopServices");
                 });
 
-            modelBuilder.Entity("ScheduloApi.Models.ShopServiceModel", b =>
+            modelBuilder.Entity("ScheduloApi.Models.ShopService", b =>
                 {
-                    b.HasOne("ScheduloApi.Models.ShopModel", "ShopModel")
+                    b.HasOne("ScheduloApi.Models.Shop", null)
                         .WithMany("Services")
-                        .HasForeignKey("ShopModelId")
+                        .HasForeignKey("ShopId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("ShopModel");
                 });
 
-            modelBuilder.Entity("ScheduloApi.Models.ShopModel", b =>
+            modelBuilder.Entity("ScheduloApi.Models.Shop", b =>
                 {
                     b.Navigation("Services");
                 });

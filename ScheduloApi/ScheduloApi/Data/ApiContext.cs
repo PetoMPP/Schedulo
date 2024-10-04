@@ -10,12 +10,12 @@ namespace ScheduloApi.Data
         {
         }
 
-        public DbSet<ShopModel> ShopModel { get; set; } = default!;
-        public DbSet<ShopServiceModel> ShopServiceModel { get; set; } = default!;
+        public DbSet<Shop> Shops { get; set; } = default!;
+        public DbSet<ShopService> ShopServices { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HandleShopServiceModelCreating();
+            modelBuilder.HandleShopServiceCreating();
         }
     }
 }
