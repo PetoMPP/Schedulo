@@ -12,5 +12,10 @@ namespace ScheduloApi.Data
 
         public DbSet<ShopModel> ShopModel { get; set; } = default!;
         public DbSet<ShopServiceModel> ShopServiceModel { get; set; } = default!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.HandleShopServiceModelCreating();
+        }
     }
 }
