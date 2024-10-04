@@ -4,23 +4,23 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ScheduloApi.Models
 {
-    public class ShopServiceModel
+    public class ShopService
     {
         [Key]
-        public int Id { get; internal set; }
+        public Guid Id { get; internal set; }
         public string Name { get; set; } = null!;
         public decimal Price { get; set; }
         public string? Description { get; set; }
         public TimeSpan Duration { get; set; }
-        public int ShopModelId { get; set; }
+        public Guid ShopId { get; set; }
     }
 
     public static class ShopServiceModelExtensions
     {
-        public static void HandleShopServiceModelCreating(this ModelBuilder modelBuilder)
+        public static void HandleShopServiceCreating(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<ShopServiceModel>()
-                .Property(s => s.ShopModelId)
+            modelBuilder.Entity<ShopService>()
+                .Property(s => s.ShopId)
                 .ValueGeneratedOnAdd()
                 .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
         }

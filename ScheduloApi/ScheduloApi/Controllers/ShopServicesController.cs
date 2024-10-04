@@ -19,7 +19,7 @@ namespace ScheduloApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAsync(int id)
         {
-            var shopServiceModel = await _context.ShopServiceModel.FindAsync(id);
+            var shopServiceModel = await _context.ShopServices.FindAsync(id);
             if (shopServiceModel == null)
             {
                 return NotFound();
@@ -29,22 +29,23 @@ namespace ScheduloApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromBody]ShopServiceModel shopServiceModel)
+        public async Task<IActionResult> CreateAsync([FromBody]ShopService shopServiceModel)
         {
-            await _context.ShopServiceModel.AddAsync(shopServiceModel);
+            _context.ShopServices.Add(shopServiceModel);
+            await _context.SaveChangesAsync();
             return Ok(shopServiceModel);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAsync(int id, [FromBody] ShopServiceModel shopServiceModel)
+        public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] ShopService shopServiceModel)
         {
-            if (!_context.ShopServiceModel.Any(s => s.Id == id))
+            if (!_context.ShopServices.Any(s => s.Id == id))
             {
                 return NotFound();
             }
 
             shopServiceModel.Id = id;
-            _context.ShopServiceModel.Update(shopServiceModel);
+            _context.ShopServices.Update(shopServiceModel);
             await _context.SaveChangesAsync();
             await _context.Entry(shopServiceModel).ReloadAsync();
             return Ok(shopServiceModel);
@@ -53,13 +54,13 @@ namespace ScheduloApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var shopServiceModel = await _context.ShopServiceModel.FindAsync(id);
+            var shopServiceModel = await _context.ShopServices.FindAsync(id);
             if (shopServiceModel == null)
             {
                 return NotFound();
             }
 
-            _context.ShopServiceModel.Remove(shopServiceModel);
+            _context.ShopServices.Remove(shopServiceModel);
             await _context.SaveChangesAsync();
             return Ok();
         }
