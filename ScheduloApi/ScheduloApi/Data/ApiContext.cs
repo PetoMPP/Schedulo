@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ScheduloApi.Models;
 
 namespace ScheduloApi.Data
 {
-    public class ApiContext : DbContext
+    public class ApiContext : IdentityDbContext<IdentityUser>
     {
         public ApiContext(DbContextOptions<ApiContext> options)
             : base(options)
@@ -16,6 +18,7 @@ namespace ScheduloApi.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HandleShopServiceCreating();
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
