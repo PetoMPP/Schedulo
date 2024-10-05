@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ScheduloApi.Data;
+using ScheduloApi.Models;
+using ScheduloApi.Services;
 namespace ScheduloApi
 {
     public class Program
@@ -10,14 +13,23 @@ namespace ScheduloApi
             builder.Services.AddDbContext<ApiContext>(options =>
                 options.UseSqlite(builder.Configuration.GetConnectionString("ScheduloApiContext") ?? throw new InvalidOperationException("Connection string 'ScheduloApiContext' not found.")));
 
-            // Add services to the container.
+            builder.Services.AddAuthorization();
+            builder.Services.AddIdentityApiEndpoints<BusinessUser>(c =>
+                {
+                    //c.SignIn.RequireConfirmedEmail = true;
+                    c.User.RequireUniqueEmail = true;
+                    c.Password.RequireNonAlphanumeric = false;
+                })
+                .AddEntityFrameworkStores<ApiContext>();
+            builder.Services.AddTransient<IEmailSender<BusinessUser>, BusinessUserEmailSender>();
 
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
+
+            app.MapIdentityApi<BusinessUser>();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -29,7 +41,6 @@ namespace ScheduloApi
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
 
             app.MapControllers();
 

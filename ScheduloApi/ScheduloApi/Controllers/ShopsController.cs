@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScheduloApi.Data;
 using ScheduloApi.Models;
@@ -45,6 +46,7 @@ namespace ScheduloApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create([FromBody] Shop shopModel)
         {
             _context.Add(shopModel);
@@ -53,6 +55,7 @@ namespace ScheduloApi.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> Update(Guid id, [FromBody] Shop shopModel)
         {
             if (!_context.Shops.Any(s => s.Id == id))
@@ -67,6 +70,7 @@ namespace ScheduloApi.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             var shopModel = await _context.Shops.FindAsync(id);
