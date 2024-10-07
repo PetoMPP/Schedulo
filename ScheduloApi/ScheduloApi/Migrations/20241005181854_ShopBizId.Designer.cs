@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ScheduloApi.Data;
 
@@ -10,9 +11,11 @@ using ScheduloApi.Data;
 namespace ScheduloApi.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    partial class ApiContextModelSnapshot : ModelSnapshot
+    [Migration("20241005181854_ShopBizId")]
+    partial class ShopBizId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.8");
@@ -248,7 +251,7 @@ namespace ScheduloApi.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("Shops", (string)null);
+                    b.ToTable("Shops");
                 });
 
             modelBuilder.Entity("ScheduloApi.Models.ShopService", b =>
@@ -278,7 +281,7 @@ namespace ScheduloApi.Migrations
 
                     b.HasIndex("ShopId");
 
-                    b.ToTable("ShopServices", (string)null);
+                    b.ToTable("ShopServices");
                 });
 
             modelBuilder.Entity("ScheduloApi.Models.BusinessUser", b =>

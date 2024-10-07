@@ -1,4 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ScheduloApi.Models
 {
@@ -13,5 +15,12 @@ namespace ScheduloApi.Models
         [DataType(DataType.Date)]
         public DateTime JoinDate { get; internal set; } = DateTime.Now;
         public List<ShopService>? Services { get; internal set; }
+        [JsonIgnore]
+        public string OwnerId { get; set; } = null!;
+        [JsonIgnore]
+        [ForeignKey(nameof(OwnerId))]
+        public BusinessUser Owner { get; set; } = null!;
     }
+
+    public record struct ShopDto(string Name, string? ImageUrl, string? Summary, string? Description);
 }

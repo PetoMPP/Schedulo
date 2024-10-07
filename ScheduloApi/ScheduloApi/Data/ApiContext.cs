@@ -12,6 +12,7 @@ namespace ScheduloApi.Data
         {
         }
 
+        public DbSet<BusinessUser> BusinessUsers { get; set; } = default!;
         public DbSet<Shop> Shops { get; set; } = default!;
         public DbSet<ShopService> ShopServices { get; set; } = default!;
 
