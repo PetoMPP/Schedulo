@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScheduloApi.Data;
+using ScheduloApi.Extensions;
 using ScheduloApi.Models;
 
 namespace ScheduloApi.Controllers
@@ -11,10 +13,12 @@ namespace ScheduloApi.Controllers
     public class ShopsController : Controller
     {
         private readonly ApiContext _context;
+        private readonly IMapper _mapper;
 
-        public ShopsController(ApiContext context)
+        public ShopsController(ApiContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -45,38 +49,59 @@ namespace ScheduloApi.Controllers
             return base.Ok(shopModel);
         }
 
+        [HttpGet("owned")]
+        [Authorize]
+        public async Task<IActionResult> GetOwned()
+        {
+            var userId = User.GetUserId()!;
+            var shops = await _context.Shops.Where(s => s.OwnerId == userId).ToListAsync();
+            return Ok(shops);
+        }
+
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> Create([FromBody] Shop shopModel)
+        public async Task<IActionResult> Create([FromBody] ShopDto shopDto)
         {
-            _context.Add(shopModel);
+            var shopModel = _mapper.Map<Shop>(shopDto);
+            shopModel.OwnerId = User.GetUserId()!;
+            _context.Shops.Add(shopModel);
             await _context.SaveChangesAsync();
             return Ok(shopModel);
         }
 
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> Update(Guid id, [FromBody] Shop shopModel)
+        public async Task<IActionResult> Update(Guid id, [FromBody] ShopDto shopDto)
         {
-            if (!_context.Shops.Any(s => s.Id == id))
+            if (await _context.Shops.FirstOrDefaultAsync(s => s.Id == id) is not { } shopModel)
             {
                 return NotFound();
             }
 
-            shopModel.Id = id;
+            _mapper.Map(shopDto, shopModel);
+            if (shopModel.OwnerId != User.GetUserId())
+            {
+                return Unauthorized();
+            }
+
             _context.Shops.Update(shopModel);
             await _context.SaveChangesAsync();
             return Ok(shopModel);
         }
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         [Authorize]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Guid id)
         {
             var shopModel = await _context.Shops.FindAsync(id);
             if (shopModel == null)
             {
                 return NotFound();
+            }
+
+            if (shopModel.OwnerId != User.GetUserId())
+            {
+                return Unauthorized();
             }
 
             _context.Shops.Remove(shopModel);
