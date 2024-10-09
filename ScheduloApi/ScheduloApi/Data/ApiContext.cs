@@ -5,7 +5,7 @@ using ScheduloApi.Models;
 
 namespace ScheduloApi.Data
 {
-    public class ApiContext : IdentityDbContext<IdentityUser>
+    public class ApiContext : IdentityDbContext<IdentityUser<Guid>, IdentityRole<Guid>, Guid>
     {
         public ApiContext(DbContextOptions<ApiContext> options)
             : base(options)
@@ -15,11 +15,5 @@ namespace ScheduloApi.Data
         public DbSet<BusinessUser> BusinessUsers { get; set; } = default!;
         public DbSet<Shop> Shops { get; set; } = default!;
         public DbSet<ShopService> ShopServices { get; set; } = default!;
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.HandleShopServiceCreating();
-            base.OnModelCreating(modelBuilder);
-        }
     }
 }

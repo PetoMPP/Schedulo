@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using ScheduloApi.Data;
 using ScheduloApi.Models;
 using ScheduloApi.Services;
+
 namespace ScheduloApi
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddDbContext<ApiContext>(options =>
@@ -20,9 +21,12 @@ namespace ScheduloApi
                     c.User.RequireUniqueEmail = true;
                     c.Password.RequireNonAlphanumeric = false;
                 })
+                .AddRoles<IdentityRole<Guid>>()
+                .AddUserManager<UserManager<BusinessUser>>()
+                .AddRoleManager<RoleManager<IdentityRole<Guid>>>()
                 .AddEntityFrameworkStores<ApiContext>();
-            builder.Services.AddTransient<IEmailSender<BusinessUser>, BusinessUserEmailSender>();
 
+            builder.Services.AddTransient<IEmailSender<BusinessUser>, BusinessUserEmailSender>();
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -30,9 +34,14 @@ namespace ScheduloApi
 
             var app = builder.Build();
 
-            app.MapIdentityApi<BusinessUser>();
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                var context = services.GetRequiredService<ApiContext>();
+                await context.Database.MigrateAsync();
+                await services.EnsureBusinessUserRole();
+            }
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
@@ -40,12 +49,10 @@ namespace ScheduloApi
             }
 
             app.UseHttpsRedirection();
-
             app.UseAuthorization();
-
             app.MapControllers();
 
-            app.Run();
+            await app.RunAsync();
         }
     }
 }

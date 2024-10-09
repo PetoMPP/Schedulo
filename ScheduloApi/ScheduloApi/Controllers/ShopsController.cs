@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScheduloApi.Data;
@@ -32,7 +31,7 @@ namespace ScheduloApi.Controllers
             return Ok(await query.ToListAsync());
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get(Guid id, bool withServices)
         {
             IQueryable<Shop> query = _context.Shops;
@@ -50,7 +49,7 @@ namespace ScheduloApi.Controllers
         }
 
         [HttpGet("owned")]
-        [Authorize]
+        [AuthorizeBusinessUser]
         public async Task<IActionResult> GetOwned()
         {
             var userId = User.GetUserId()!;
@@ -59,18 +58,18 @@ namespace ScheduloApi.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [AuthorizeBusinessUser]
         public async Task<IActionResult> Create([FromBody] ShopDto shopDto)
         {
             var shopModel = _mapper.Map<Shop>(shopDto);
-            shopModel.OwnerId = User.GetUserId()!;
+            shopModel.OwnerId = (Guid)User.GetUserId()!;
             _context.Shops.Add(shopModel);
             await _context.SaveChangesAsync();
             return Ok(shopModel);
         }
 
-        [HttpPut("{id}")]
-        [Authorize]
+        [HttpPut("{id:guid}")]
+        [AuthorizeBusinessUser]
         public async Task<IActionResult> Update(Guid id, [FromBody] ShopDto shopDto)
         {
             if (await _context.Shops.FirstOrDefaultAsync(s => s.Id == id) is not { } shopModel)
@@ -89,8 +88,8 @@ namespace ScheduloApi.Controllers
             return Ok(shopModel);
         }
 
-        [HttpDelete("{id}")]
-        [Authorize]
+        [HttpDelete("{id:guid}")]
+        [AuthorizeBusinessUser]
         public async Task<IActionResult> Delete(Guid id)
         {
             var shopModel = await _context.Shops.FindAsync(id);

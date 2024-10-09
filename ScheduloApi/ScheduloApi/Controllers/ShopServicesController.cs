@@ -16,7 +16,7 @@ namespace ScheduloApi.Controllers
             _context = context;
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:guid}")]
         public async Task<IActionResult> GetAsync(Guid id)
         {
             var shopServiceModel = await _context.ShopServices.FindAsync(id);
@@ -29,7 +29,7 @@ namespace ScheduloApi.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [AuthorizeBusinessUser]
         public async Task<IActionResult> CreateAsync([FromBody]ShopService shopServiceModel)
         {
             _context.ShopServices.Add(shopServiceModel);
@@ -37,8 +37,8 @@ namespace ScheduloApi.Controllers
             return Ok(shopServiceModel);
         }
 
-        [HttpPut("{id}")]
-        [Authorize]
+        [HttpPut("{id:guid}")]
+        [AuthorizeBusinessUser]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] ShopService shopServiceModel)
         {
             if (!_context.ShopServices.Any(s => s.Id == id))
@@ -53,8 +53,8 @@ namespace ScheduloApi.Controllers
             return Ok(shopServiceModel);
         }
 
-        [HttpDelete("{id}")]
-        [Authorize]
+        [HttpDelete("{id:guid}")]
+        [AuthorizeBusinessUser]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
             var shopServiceModel = await _context.ShopServices.FindAsync(id);
