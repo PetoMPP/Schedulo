@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System.ComponentModel.DataAnnotations;
 
 namespace ScheduloApi.Models
 {
+    [EntityTypeConfiguration(typeof(ShopServiceTypeConfiguration))]
     public class ShopService
     {
         [Key]
@@ -15,11 +17,11 @@ namespace ScheduloApi.Models
         public Guid ShopId { get; set; }
     }
 
-    public static class ShopServiceModelExtensions
+    public class ShopServiceTypeConfiguration : IEntityTypeConfiguration<ShopService>
     {
-        public static void HandleShopServiceCreating(this ModelBuilder modelBuilder)
+        public void Configure(EntityTypeBuilder<ShopService> builder)
         {
-            modelBuilder.Entity<ShopService>()
+            builder
                 .Property(s => s.ShopId)
                 .ValueGeneratedOnAdd()
                 .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);

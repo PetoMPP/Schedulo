@@ -16,7 +16,7 @@ namespace ScheduloApi.Models
         public DateTime JoinDate { get; internal set; } = DateTime.Now;
         public List<ShopService>? Services { get; internal set; }
         [JsonIgnore]
-        public string OwnerId { get; set; } = null!;
+        public Guid OwnerId { get; set; }
         [JsonIgnore]
         [ForeignKey(nameof(OwnerId))]
         public BusinessUser Owner { get; set; } = null!;
