@@ -1,4 +1,4 @@
-import { ShopServicesData } from "../data/shop";
+import { ShopServicesData } from "../types";
 
 export default function ShopServicesCard(props: ShopServicesData) {
   const owner = props.shop;

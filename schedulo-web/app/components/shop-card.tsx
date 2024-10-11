@@ -1,6 +1,6 @@
-import { ShopData } from "../data/shop";
+import { ShopData } from "../types";
 
-export default function OwnerCard(props: ShopData) {
+export default function ShopCard(props: ShopData) {
   return (
     <div className="card card-compact bg-base-100 lg:w-96 w-60 shadow-md h-full">
       <figure>

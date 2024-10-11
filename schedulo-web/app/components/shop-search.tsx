@@ -36,5 +36,5 @@ function SearchElements(props: { query?: string }) {
 }
 
 function getSearchHref(query: string | undefined) {
-  return query ? `/search?q=${query}` : "";
+  return `/search?q=${query ?? ""}`;
 }
