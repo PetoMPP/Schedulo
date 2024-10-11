@@ -51,6 +51,7 @@ namespace ScheduloApi
             app.UseHttpsRedirection();
             app.UseAuthorization();
             app.MapControllers();
+            app.UseCors(c => c.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             await app.RunAsync();
         }
