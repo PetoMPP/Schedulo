@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using ScheduloApi.Models;
+using ScheduloApi.Identity.Models;
 
 namespace ScheduloApi.Controllers
 {

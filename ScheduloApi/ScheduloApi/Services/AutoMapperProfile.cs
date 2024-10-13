@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ScheduloApi.Identity.Models;
 using ScheduloApi.Models;
 
 namespace ScheduloApi.Services

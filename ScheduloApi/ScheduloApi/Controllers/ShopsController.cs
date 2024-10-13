@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ScheduloApi.Data;
 using ScheduloApi.Extensions;
+using ScheduloApi.Identity.Attributes;
 using ScheduloApi.Models;
 
 namespace ScheduloApi.Controllers

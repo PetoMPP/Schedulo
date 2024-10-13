@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ScheduloApi.Data;
 using ScheduloApi.Models;
+using ScheduloApi.Identity.Attributes;
 
 namespace ScheduloApi.Controllers
 {

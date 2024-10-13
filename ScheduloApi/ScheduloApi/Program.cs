@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using ScheduloApi.Data;
-using ScheduloApi.Models;
+using ScheduloApi.Identity;
+using ScheduloApi.Identity.Extensions;
+using ScheduloApi.Identity.Models;
 using ScheduloApi.Services;
 
 namespace ScheduloApi
@@ -27,6 +30,12 @@ namespace ScheduloApi
                 .AddEntityFrameworkStores<ApiContext>();
 
             builder.Services.AddTransient<IEmailSender<BusinessUser>, BusinessUserEmailSender>();
+            // Use only one IUserValidator<TUser>
+            builder.Services.Replace(new ServiceDescriptor(
+                typeof(IUserValidator<BusinessUser>),
+                typeof(BusinessUserValidator),
+                ServiceLifetime.Transient
+            ));
             builder.Services.AddControllers();
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

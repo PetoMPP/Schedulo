@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using ScheduloApi.Models;
+using ScheduloApi.Identity.Models;
 
 namespace ScheduloApi.Services
 {

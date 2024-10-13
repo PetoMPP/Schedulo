@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ScheduloApi.Identity.Models;
 using ScheduloApi.Models;
 
 namespace ScheduloApi.Data
