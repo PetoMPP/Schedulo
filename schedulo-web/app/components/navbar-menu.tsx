@@ -12,10 +12,17 @@ export default function NavbarMenu() {
     document.getElementById("navbar-menu-summary")?.click();
   const links = isBiz
     ? [
-        <Link key="biz-login" href="/biz/login" className="btn btn-ghost">
+        <Link key="login" href="/biz/login" className="btn btn-ghost">
           Login
         </Link>,
-        <Link key="login" href="/" className="btn btn-ghost text-secondary break-words">
+        <Link key="register" href="/biz/register" className="btn btn-ghost">
+          Register
+        </Link>,
+        <Link
+          key="switch"
+          href="/"
+          className="btn btn-ghost text-secondary break-words"
+        >
           Go to appointments portal
         </Link>,
       ]
@@ -23,7 +30,14 @@ export default function NavbarMenu() {
         <Link key="biz-login" href="/login" className="btn btn-ghost">
           Login
         </Link>,
-        <Link key="login" href="/biz" className="btn btn-ghost text-secondary break-words">
+        <Link key="register" href="/register" className="btn btn-ghost">
+          Register
+        </Link>,
+        <Link
+          key="login"
+          href="/biz"
+          className="btn btn-ghost text-secondary break-words"
+        >
           Go to business owner portal
         </Link>,
       ];

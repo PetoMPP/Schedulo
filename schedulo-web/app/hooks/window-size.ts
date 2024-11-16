@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useEvent from "./event";
 
 export enum WindowWidth {
@@ -21,6 +21,7 @@ function getWindowWidth(): WindowWidth {
 
 export default function useWindowWidth(): WindowWidth {
   const [width, setWidth] = useState(WindowWidth.XXLarge);
+  useEffect(() => setWidth(getWindowWidth()), []);
   useEvent(() => window, "resize", () => setWidth(getWindowWidth()));
   return width;
 }

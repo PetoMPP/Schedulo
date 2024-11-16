@@ -17,7 +17,7 @@ namespace ScheduloApi.Identity
                 // Replace default error message
                 errors.Find(e => e.Code == "InvalidUserName")!.Description = "Username cannot be empty.";
             }
-            if (user.UserName?.Length is < MinUserNameLength or > MaxUserNameLength)
+            else if (user.UserName?.Length is < MinUserNameLength or > MaxUserNameLength)
             {
                 errors.Add(new IdentityError
                 {

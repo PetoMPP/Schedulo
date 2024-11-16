@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using ScheduloApi.Identity.Attributes;
 using ScheduloApi.Identity.Models;
+using ScheduloApi.Models;
 
 namespace ScheduloApi.Controllers
 {
@@ -31,20 +33,22 @@ namespace ScheduloApi.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        [AuthorizeBusinessUser]
+        public async Task<IActionResult> GetBusinessUser()
+        {
+            return Ok(_mapper.Map<BusinessUserDto>(await _userManager.GetUserAsync(User)));
+        }
+
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] BusinessUserRegisterDto registerDto)
         {
-            if (await _userManager.FindByEmailAsync(registerDto.Email) is not null || await _userManager.FindByNameAsync(registerDto.UserName) is not null)
-            {
-                return BadRequest(new { Error = "User already exists" });
-            }
-
             var businessUser = _mapper.Map<BusinessUser>(registerDto);
             var result = await _userManager.CreateAsync(businessUser, registerDto.Password);
 
             if (!result.Succeeded)
             {
-                return BadRequest(result.Errors);
+                return BadRequest(new ApiErrorResponse(result.Errors));
             }
 
             await _userManager.AddToRoleAsync(businessUser, BusinessUser.RoleName);
@@ -58,7 +62,7 @@ namespace ScheduloApi.Controllers
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
             if (user is null)
             {
-                return BadRequest(new { Error = "User does not exist" });
+                return BadRequest(new ApiErrorResponse("UserNotFound", $"User with email '{loginDto.Email}' was not found."));
             }
 
             _signInManager.AuthenticationScheme = IdentityConstants.BearerScheme;
@@ -67,10 +71,10 @@ namespace ScheduloApi.Controllers
 
             if (!result.Succeeded)
             {
-                return Unauthorized(new { Error = "Invalid password" });
+                return Unauthorized(new ApiErrorResponse("InvalidPassword", "Provided password was invalid."));
             }
 
-            return Ok();
+            return Empty;
         }
 
         [HttpPost("refresh")]
@@ -84,7 +88,7 @@ namespace ScheduloApi.Controllers
                 _timeProvider.GetUtcNow() >= expiresUtc ||
                 await _signInManager.ValidateSecurityStampAsync(refreshTicket.Principal) is not { } user)
             {
-                return Unauthorized();
+                return Unauthorized(new ApiErrorResponse("TokenExpired", "Refresh token is expired."));
             }
 
             var newPrincipal = await _signInManager.CreateUserPrincipalAsync(user);

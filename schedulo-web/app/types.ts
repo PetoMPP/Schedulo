@@ -16,3 +16,10 @@ export type ServiceData = {
   description?: string;
   duration: number;
 }
+
+export type BizUserData = {
+  id: string;
+  email: string;
+  username: string;
+  roles: string[];
+}

@@ -8,10 +8,15 @@ export const metadata: Metadata = {
   description: "Schedule your barber appointments and many more!",
 };
 
-const font = Montserrat({ subsets: ["latin"], variable: "--font-montserrat" });
+const font = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 const monoFont = Roboto_Mono({
   subsets: ["latin"],
   variable: "--font-roboto-mono",
+  display: "swap",
 });
 
 export default function RootLayout({

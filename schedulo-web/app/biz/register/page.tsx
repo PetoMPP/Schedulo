@@ -1,50 +1,38 @@
 "use client";
 
-import Alert, { AlertType } from "@/app/components/alert";
 import Input from "@/app/components/input";
 import SvgEmail from "@/app/components/svg/email";
 import SvgPassword from "@/app/components/svg/password";
-import { useState } from "react";
+import SvgUser from "@/app/components/svg/user";
 import { useFormState, useFormStatus } from "react-dom";
-import login from "./action";
-import { useRouter } from "next/navigation";
-import { ApiErrors, isApiErrors, LoginResponse } from "@/app/api";
-import { setBizLoginData } from "@/app/utils/biz-login-data";
+import register from "./action";
+import { useState } from "react";
+import Alert, { AlertType } from "@/app/components/alert";
+import Link from "next/link";
 
-export default function OwnerLogin() {
-  const [result, formAction] = useFormState(login, null);
-  const router = useRouter();
-
-  console.log("result", result);
-
-  if (result && !isApiErrors(result)) {
-    const loginResponse = result as LoginResponse;
-    const validUntilUtc = new Date().getTime() + loginResponse.expiresIn * 1000;
-
-    console.log("we are here");
-
-    setBizLoginData({
-      accessToken: loginResponse.accessToken,
-      refreshToken: loginResponse.refreshToken,
-      validUntilUtc,
-    });
-    router.push("/biz");
-    return <p>Redirecting...</p>;
-  }
+export default function OwnerRegister() {
+  const [result, formAction] = useFormState(register, false);
 
   return (
     <div className="lg:max-w-[50%]">
-      <h2 className="font-semibold text-2xl pb-4">Login</h2>
-      <form action={formAction} className="flex flex-col gap-3">
-        <LoginFormInner
-          errors={result === null ? undefined : (result as ApiErrors).errors}
-        />
-      </form>
+      <h2 className="font-semibold text-2xl pb-4">Register</h2>
+      {result === true ? (
+        <div className="flex flex-col gap-4 items-end">
+          <Alert type={AlertType.Success} messages={["Registration successful.", "Activation link would be sent to your email address if it was implemented."]} />
+          <Link href="/login" className="btn btn-primary btn-lg">Go To Login</Link>
+        </div>
+      ) : (
+        <form action={formAction} className="flex flex-col gap-3">
+          <RegisterFormInner
+            errors={result === false ? undefined : result?.errors}
+          />
+        </form>
+      )}
     </div>
   );
 }
 
-function LoginFormInner({
+function RegisterFormInner({
   errors,
 }: {
   errors?: { code: string; description: string }[];
@@ -90,6 +78,13 @@ function LoginFormInner({
         onKeyDown={() => setClearErrors(true)}
       />
       <Input
+        name="username"
+        svg={<SvgUser />}
+        errors={usernameErrors}
+        placeholder="username"
+        onKeyDown={() => setClearErrors(true)}
+      />
+      <Input
         name="password"
         svg={<SvgPassword />}
         errors={passwordErrors}
@@ -106,7 +101,7 @@ function LoginFormInner({
         {formStatus.pending ? (
           <span className="loading loading-dots loading-md"></span>
         ) : (
-          "Login"
+          "Register"
         )}
       </button>
     </>

@@ -10,6 +10,7 @@ namespace ScheduloApi.Services
         {
             CreateMap<ShopDto, Shop>();
             CreateMap<BusinessUserRegisterDto, BusinessUser>();
+            CreateMap<BusinessUser, BusinessUserDto>();
         }
     }
 }
